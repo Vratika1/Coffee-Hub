@@ -1,0 +1,219 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>coffee hub login</title>
+</head>
+<style>
+    @import url('https://fonts.googleapis.com/css2?family=Playfair+Display:ital,wght@0,400..900;1,400..900&display=swap');
+*{
+    margin: 0;
+    padding: 0;
+    border:border-box;
+    font-family: Arial, Helvetica, sans-serif;
+}
+
+body{
+    background-color: black;
+    background-image: url("images/bg-1.avif");
+    background-repeat: no-repeat;
+    background-size: cover;
+    display: flex;
+    justify-content: center;
+    position: relative;
+    align-items: center;
+}
+.login_conatiner{
+    height:60vh;
+    width: 30vw;
+    position: absolute;
+    top: 10rem;
+    color: white;
+    background-color: #4d4855;
+    background-image: linear-gradient(147deg, #4d4855 0%, #000000 74%);
+    display:flex;
+    justify-content: center;
+    align-items: center;
+    padding: 0 0.5rem;
+    border-radius: 1rem;
+}
+.login1{
+    position: relative;
+    height: 58vh;
+    width:25vw;
+    color: aliceblue;
+}
+h1{
+    color: #fff;
+	font-size: 2.3em;
+	justify-content: center;
+	display: flex;
+	margin: 60px;
+	font-weight: bold;
+	cursor: pointer;
+}
+input{
+	width: 60%;
+	height: 20px;
+	background: #e0dede;
+	justify-content: center;
+	display: flex;
+	margin: 20px auto;
+	padding: 10px;
+	border: none;
+	outline: none;
+	border-radius: 5px;
+}
+button{
+    width: 60%;
+	height: 40px;
+	margin: 10px auto;
+	justify-content: center;
+	display: block;
+	color: #fff;
+	background: #2f002d;
+	font-size: 1em;
+	font-weight: bold;
+	margin-top: 20px;
+	outline: none;
+	border: none;
+	border-radius: 5px;
+	cursor: pointer;
+}
+button:hover{
+	background: #615d68;
+}
+.login1 p{
+    padding-top: 1rem;
+    padding-left: 4.1rem;
+}
+.login1 a{
+    text-decoration: none;
+    font-weight: bolder;
+    color: #cccccc;
+}
+.login1 a:hover{
+    cursor: pointer;
+    color: cornsilk;
+    text-decoration: underline;
+    letter-spacing: 0.1rem;
+}
+.a1{
+    padding-left: 8rem;
+    margin-top: 2rem;
+    letter-spacing: normal;
+}
+
+
+/* media queries*/
+
+/*   MAX WIDTH 981PX */
+
+@media (max-width:1100px){
+    html{
+        font-size: 55%;  
+    }
+    .login_conatiner{
+        height:80vh;
+        width: 30vw;
+        margin-left:3rem;
+        margin-right: 3rem;
+    }
+    h1{
+        margin:4.3rem;
+        margin-top:-1rem; 
+    }
+    input{
+        width: 70%;
+    }
+    body{
+        background-repeat:repeat-y;
+    }
+    .login1 p{
+        padding-top: 1rem;
+        padding-left: 5.1rem;
+    }
+    button{
+        font-size: 2rem;
+    }
+    .a1{
+        padding-left: 10rem;
+    }
+    
+}
+
+
+/*   MAX WIDTH 800PX */
+
+@media (max-width:800px){
+    .login_conatiner{
+        height:70vh;
+        width: 50vw;
+        margin:auto;
+    }
+    h1{
+        margin:4.3rem;
+        margin-top:-1rem; 
+    }
+    input{
+        width: 80%;
+    }
+    body{
+        background-repeat: repeat-y;
+    }
+    .login1 p{
+        padding-top: 1rem;
+        padding-left: 2.1rem;
+    }
+    .a1{
+        padding-left: 6rem;
+    }
+    
+}
+
+@media (max-width:600px){
+    .login1 p{
+        padding-top: 1rem;
+        padding-left: 0.1rem;
+    }
+    .a1{
+        padding-left: 4rem;
+    }
+
+}
+@media (max-width:520px){
+    .login1 p{
+        padding-top: 1rem;
+        padding-left: 0.1rem;
+    }
+    .a1{
+        padding-left: 4rem;
+    }
+
+}
+@media (max-width:420px){
+    .login1 p{
+        padding-top: 1rem;
+        padding-left: 0.1rem;
+    }
+    .a1{
+        padding-left: 1.5rem;
+    }
+}
+
+</style>
+<body>
+    <div class="login_conatiner">
+        <div class="login1">
+        <form>
+            <h1>Login</h1>
+            <input type="email" name="email" placeholder="Email" required="">
+            <input type="password" name="pswd" placeholder="Password" required="">
+            <button>Login</button>
+        </form>
+        <p>if you don't have an account then <a href="signin.html">Sign up</a></p>
+        <a class="a1" href="coffee.html">Go to home page</a>
+    </div>
+</body>
+</html>
