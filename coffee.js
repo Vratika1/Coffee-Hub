@@ -273,6 +273,79 @@ const saveOrder = () => {
     localStorage.setItem('order', JSON.stringify(order));
 };
 
+
+// Function to calculate totals and update the DOM
+const updateTotals = () => {
+    const totalQtyEl = document.querySelector('.total .qty');
+    const totalPriceEl = document.querySelector('.total .t-price');
+    const gstEl = document.querySelector('.total .tgst');
+    const finalPriceEl = document.querySelector('.total .f-price');
+
+    let totalQuantity = 0;
+    let totalPrice = 0;
+
+    order.forEach(item => {
+        totalQuantity += item.quantity;
+        totalPrice += item.price * item.quantity;
+    });
+
+    const gst = totalPrice * 0.18; // 18% GST
+    const finalPrice = totalPrice + gst;
+
+    // Update DOM
+    totalQtyEl.textContent = totalQuantity;
+    totalPriceEl.textContent = `$${totalPrice.toFixed(2)}`;
+    gstEl.textContent = `$${gst.toFixed(2)}`;
+    finalPriceEl.textContent = `$${finalPrice.toFixed(2)}`;
+};
+
+
+const placeOrderButtons = document.querySelectorAll('.b1');
+const viewOrderButton = document.getElementById('plorder3');
+const orderContainer = document.querySelector('.plordercont');
+const placeOrderContainer = document.querySelector('.placeorder_container');
+
+// Function to render order items in the container
+const renderOrderItems = () => {
+    orderContainer.innerHTML = '';
+
+    if (order.length === 0) {
+        orderContainer.innerHTML = `
+            <p>Your order list is empty.</p>
+            <div class="img"></div>`;
+            updateTotals(); // Ensure totals are updated
+        return;
+    }
+
+    order.forEach((item, index) => {
+        const orderItem = document.createElement('div');
+        orderItem.className = 'order-item';
+        orderItem.innerHTML = `
+            <img src="${item.image}" alt="${item.name}">
+            <span>${item.quantity}x ${item.name} - $${item.price}</span>
+            <button class="remove-button remove fas fa-times" data-index="${index}"></button>
+        `;
+        orderContainer.appendChild(orderItem);
+    });
+
+    // Attach remove event listeners
+    const removeButtons = orderContainer.querySelectorAll('.remove-button');
+    removeButtons.forEach(button => {
+        button.addEventListener('click', () => {
+            const index = parseInt(button.getAttribute('data-index'), 10);
+            order.splice(index, 1);
+            saveOrder(); // updates localStorage and totals
+
+            renderOrderItems(); // Re-render container after removal
+        });
+    });
+
+    updateTotals(); // Update totals after rendering
+};
+
+
+
+
 // Function to add an item to the order
 const addToOrder = (name, price, image, quantity) => {
     const existingItem = order.find(item => item.name === name);
@@ -285,14 +358,20 @@ const addToOrder = (name, price, image, quantity) => {
 
     saveOrder(); // Save to localStorage
     alert(`${quantity}x ${name} added to your order.`);
+
+    renderOrderItems(); // Update order display and totals
 };
+
+
+
 
 // Document Loaded Event
 document.addEventListener('DOMContentLoaded', () => {
-    const placeOrderButtons = document.querySelectorAll('.b1');
-    const viewOrderButton = document.getElementById('plorder3');
-    const orderContainer = document.querySelector('.plordercont');
-    const placeOrderContainer = document.querySelector('.placeorder_container');
+   
+
+    // Initialize totals on page load
+    updateTotals();
+
 
     // Quantity Management
     document.querySelectorAll('.quantity').forEach(item => {
@@ -333,43 +412,13 @@ document.addEventListener('DOMContentLoaded', () => {
 
     // View Order Logic with Toggle Functionality
     viewOrderButton.addEventListener('click', () => {
-        // Toggle visibility
-        if (placeOrderContainer.style.display === 'block') {
-            placeOrderContainer.style.display = 'none'; // Hide if already visible
-        } else {
-            // Show the container and populate the order list
-            orderContainer.innerHTML = '';
-
-            if (order.length === 0) {
-                orderContainer.innerHTML = `
-                    <p>Your order list is empty.</p>
-                    <div class="img"></div>`;
+         const placeOrderContainer = document.querySelector('.placeorder_container');
+            if (placeOrderContainer.style.display === 'block') {
+                placeOrderContainer.style.display = 'none';
             } else {
-                order.forEach((item, index) => {
-                    const orderItem = document.createElement('div');
-                    orderItem.className = 'order-item';
-                    orderItem.innerHTML = `
-                        <img src="${item.image}" alt="${item.name}">
-                        <span>${item.quantity}x ${item.name} - $${item.price}</span>
-                        <button class="remove-button remove fas fa-times" data-index="${index}"></button>
-                    `;
-                    orderContainer.appendChild(orderItem);
-                });
-
-                // Add event listeners for remove buttons
-                const removeButtons = orderContainer.querySelectorAll('.remove-button');
-                removeButtons.forEach(button => {
-                    button.addEventListener('click', () => {
-                        const index = button.getAttribute('data-index');
-                        order.splice(index, 1);
-                        saveOrder(); // Save updated order to localStorage after removal
-                        viewOrderButton.click(); // Refresh order view
-                    });
-                });
+                renderOrderItems(); // Render all items
+                placeOrderContainer.style.display = 'block';
             }
-
-            placeOrderContainer.style.display = 'block'; // Show the container
-        }
     });
 
     // SEARCH BAR
@@ -470,6 +519,10 @@ document.addEventListener('DOMContentLoaded', () => {
 });
 
 
+
+
+
+
 // for feedback and rating
 
 const elements = document.querySelectorAll(".teribble, .bad, .okay, .great, .excellent");
@@ -478,6 +531,8 @@ elements.forEach(element => {
     element.addEventListener("click", toggleElement);
 });
 
+
+// Toggle function for rating elements
 function toggleElement(event) {
     const target = event.currentTarget;
     
