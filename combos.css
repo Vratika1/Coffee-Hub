@@ -849,3 +849,85 @@ hr{
         width: 100% !important;
     }
 }
+
+
+
+
+.placeorder_container {
+    max-height: 0;
+    opacity: 0;
+    overflow: hidden;
+    transition: max-height 0.4s ease, opacity 0.3s ease;
+}
+
+.placeorder_container.open {
+    max-height: 500px; /* adjust if needed */
+    opacity: 1;
+}
+
+
+.search-container {
+    max-height: 80vh;
+    overflow-y: auto;
+}
+
+
+
+
+
+/* TOTAL SECTION - BLACK THEME */
+.total {
+    background-color: #111; /* deep black background */
+    color: #fff; /* white text */
+    padding: -2rem 2rem;
+    width: 100%;
+    border-radius: 0.8rem;
+    box-shadow: 0 4px 10px rgba(0,0,0,0.5); /* subtle shadow for depth */
+    font-size: 1.4rem;
+    text-transform: capitalize;
+    position: relative;
+}
+
+/* Each total row */
+.total .total-qty {
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    padding: 0.8rem 2rem;
+    border-bottom: 1px solid #333; /* subtle divider */
+}
+
+/* Last row (total price) */
+.total .total-qty.tp {
+    margin-top: 1rem;
+    font-weight: bold;
+    font-size: 1.6rem;
+    border-bottom: none; /* no divider for last row */
+}
+
+/* Labels styling */
+.total .total-qty div:first-child {
+    color: #ccc; /* slightly gray for labels */
+    font-weight: 500;
+}
+
+/* Values styling */
+.total .total-qty div:last-child {
+    color: #fff; /* bright white for numbers */
+    font-weight: 600;
+}
+
+/* Divider line inside total section */
+.total .hr {
+    width: 100%;
+    height: 1px;
+    background-color: #333;
+    margin: 1rem 0;
+    border: none;
+}
+
+/* Hover effect if needed (optional) */
+.total .total-qty:hover div:last-child {
+    color: #ffd700; /* highlight value on hover, optional */
+    transition: color 0.3s ease;
+}

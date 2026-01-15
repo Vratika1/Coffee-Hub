@@ -1,57 +1,348 @@
 
-// Orders array to store items added to the cart
-let orders = JSON.parse(localStorage.getItem('orders')) || []; // Load orders from localStorage if available
+// // Orders array to store items added to the cart
+// let orders = JSON.parse(localStorage.getItem('orders')) || []; // Load orders from localStorage if available
 
-// Save orders to localStorage whenever it changes
+// // Save orders to localStorage whenever it changes
+// const saveOrdersToLocalStorage = () => {
+//     localStorage.setItem('orders', JSON.stringify(orders));
+// };
+
+// // Add item to the orders array
+// const addToOrders = (name, price, image, quantity) => {
+//     const existingItem = orders.find(item => item.name === name);
+//     if (existingItem) {
+//         existingItem.quantity += quantity;
+//     } else {
+//         orders.push({ name, price, image, quantity });
+//     }
+
+//     saveOrdersToLocalStorage();  // Save the updated orders array to localStorage
+//     alert(`${quantity}x ${name} added to your order.`);
+// };
+
+
+
+
+// // Function to dynamically generate and display items
+// const universal = (items) => {
+//     const comboContainer = document.querySelector('.exploremore');
+//     comboContainer.style.display = "block";
+//     comboContainer.innerHTML = `
+//         <h4 class="h">Special Finds</h4>
+//         <button class="remove fas fa-times"></button>
+//         <p class="p">Indulge in our expertly crafted coffees, refreshing drinks, and delicious, freshly prepared foods. Welcome to a taste of comfort and quality.</p>
+//         <hr class="hr">
+//     `;
+
+//     const btnClose = comboContainer.querySelector(".remove");
+//     btnClose.addEventListener("click", () => {
+//         comboContainer.style.display = "none";
+//     });
+
+//     const mainContainer = document.createElement('div');
+//     mainContainer.className = 'main_container';
+
+//     items.forEach(item => {
+//         const specialContainer = document.createElement('div');
+//         specialContainer.className = 'special-item';
+//         specialContainer.innerHTML = `
+//             <div class="sec1">
+//                 <div class="section" data-name="${item.name}" data-price="${item.price}" data-image="${item.image1}">
+//                     <h4>Signature Sips</h4>
+//                     <div class="secmain">
+//                         <div class="img">
+//                             <img src="${item.image1}" alt="${item.name}">
+//                         </div>
+//                         <h5>${item.name}</h5>
+//                         <p>${item.price} <span>${item.price1}</span></p>
+//                         <div class="quantity">
+//                             <button class="increment">+</button>
+//                             <span class="quant">0</span>
+//                             <button class="decrement">-</button>
+//                         </div>
+//                         <a href="#" class="btn b1">Place Order</a>
+//                     </div>
+//                 </div>
+//             </div>
+//         `;
+//         mainContainer.appendChild(specialContainer);
+//     });
+
+//     comboContainer.appendChild(mainContainer);
+
+//     // Add event listeners to dynamically added 'Place Order' buttons
+//     mainContainer.querySelectorAll('.b1').forEach(button => {
+//         button.addEventListener('click', function (event) {
+//             event.preventDefault();
+//             const foodItem = this.closest('.section');
+//             const itemName = foodItem.getAttribute('data-name');
+//             const itemPrice = foodItem.getAttribute('data-price');
+//             const itemImage = foodItem.getAttribute('data-image');
+//             const quantity = parseInt(foodItem.querySelector('.quant').textContent, 10);
+
+//             addToOrders(itemName, itemPrice, itemImage, quantity);
+//         });
+//     });
+
+//     // Add quantity controls for dynamic items
+//     mainContainer.querySelectorAll('.increment').forEach(button => {
+//         button.addEventListener('click', () => {
+//             const quantitySpan = button.nextElementSibling;
+//             quantitySpan.textContent = parseInt(quantitySpan.textContent, 10) + 1;
+//         });
+//     });
+
+//     mainContainer.querySelectorAll('.decrement').forEach(button => {
+//         button.addEventListener('click', () => {
+//             const quantitySpan = button.previousElementSibling;
+//             const currentQuantity = parseInt(quantitySpan.textContent, 10);
+//             if (currentQuantity > 0) {
+//                 quantitySpan.textContent = currentQuantity - 1;
+//             }
+//         });
+//     });
+// };
+
+
+// document.addEventListener('DOMContentLoaded', () => {
+//     const placeOrderContainer = document.querySelector(".placeorder_container");
+//     const placeOrderButtons = document.querySelectorAll('.b1');
+//     const viewOrderButton = document.getElementById('plorder3');
+
+//     // Attach event listeners to static 'Place Order' buttons
+//     placeOrderButtons.forEach(button => {
+//         button.addEventListener('click', () => {
+//             const item = button.closest('.section');
+//             const name = item.getAttribute('data-name');
+//             const price = item.getAttribute('data-price');
+//             const image = item.getAttribute('data-image');
+//             const quantity = parseInt(item.querySelector('.quant').textContent, 10);
+
+//             if (quantity > 0) {
+//                 addToOrders(name, price, image, quantity);
+//                 item.querySelector('.quant').textContent = '0'; // Reset quantity
+//             } else {
+//                 alert("Please select a quantity before placing the order.");
+//             }
+//         });
+//     });
+
+//     // View order summary with toggle functionality
+//     viewOrderButton.addEventListener('click', () => {
+//         if (placeOrderContainer.style.display === 'block') {
+//             placeOrderContainer.style.display = 'none';
+//         } else {
+//             placeOrderContainer.innerHTML = '';
+//             if (orders.length === 0) {
+//                 placeOrderContainer.innerHTML = `<p>Your order list is empty.</p>
+//                 <div class="img"> </div>`;
+//             } else {
+//                 orders.forEach((item, index) => {
+//                     const orderItem = document.createElement('div');
+//                     orderItem.className = 'order-item';
+//                     orderItem.innerHTML = `
+//                         <img src="${item.image}" alt="${item.name}">
+//                         <span>${item.quantity}x ${item.name} - ${item.price}</span>
+//                         <button class="remove-button" data-index="${index}">Cancel Order</button>
+//                     `;
+//                     placeOrderContainer.appendChild(orderItem);
+//                 });
+
+//                 // Attach remove functionality to each order item
+//                 placeOrderContainer.querySelectorAll('.remove-button').forEach(button => {
+//                     button.addEventListener('click', () => {
+//                         const index = button.getAttribute('data-index');
+//                         orders.splice(index, 1);
+//                         saveOrdersToLocalStorage();  // Save the updated orders array to localStorage
+//                         viewOrderButton.click(); // Refresh order view
+//                     });
+//                 });
+//             }
+//             placeOrderContainer.style.display = 'block';
+//         }
+//     });
+// });
+
+
+// // SEARCH BAR
+
+// document.addEventListener('DOMContentLoaded', () => {
+//    // SEARCH BAR
+//     const searchBar = document.getElementById('search-box');
+//     const searchContainer = document.querySelector('.search-container');
+
+//     const searchItems = () => {
+//         const query = searchBar.value.toLowerCase().trim();
+
+//         searchContainer.innerHTML = `
+//             <button class="remove fas fa-times"></button>
+//         `;
+
+//         const btnClose = searchContainer.querySelector(".remove");
+//         btnClose.addEventListener("click", () => {
+//             searchContainer.style.display = "none";
+//             searchBar.value = '';
+//         });
+
+//         const searchResultsBox = document.createElement('div');
+//         searchResultsBox.className = 'search-results-box';
+//         searchContainer.appendChild(searchResultsBox);
+
+//         const menuBoxes = document.querySelectorAll('.menu-box');
+
+//         if (!query) {
+//             searchContainer.style.display = 'none';
+//             return;
+//         }
+
+//         searchContainer.style.display = 'block';
+//         let resultsFound = false;
+
+//         menuBoxes.forEach(menuBox => {
+//             const name = menuBox.querySelector('.name')?.textContent.toLowerCase();
+//             if (name && name.includes(query)) {
+//                 const clonedItem = menuBox.cloneNode(true);
+//                 addDynamicEventListeners(clonedItem);
+//                 searchResultsBox.appendChild(clonedItem);
+//                 resultsFound = true;
+//             }
+//         });
+
+//         if (resultsFound) {
+//             const heading = document.createElement('h4');
+//             heading.className = 'h';
+//             heading.textContent = 'Your Search Results';
+//             searchContainer.insertBefore(heading, searchResultsBox);
+//         } else {
+//             const noResultsMessage = document.createElement('h2');
+//             noResultsMessage.textContent = 'No results found.';
+//             searchResultsBox.appendChild(noResultsMessage);
+//         }
+//     };
+
+//     const addDynamicEventListeners = (item) => {
+//         const placeOrderButton = item.querySelector('.b1');
+//         if (placeOrderButton) {
+//             placeOrderButton.addEventListener('click', function (event) {
+//                 event.preventDefault();
+//                 const menuBox = this.closest('.menu-box');
+//                 const name = menuBox.getAttribute('data-name');
+//                 const price = menuBox.getAttribute('data-price');
+//                 const image = menuBox.getAttribute('data-image');
+//                 const quantity = parseInt(menuBox.querySelector('.quant').textContent, 10);
+
+//                 if (quantity > 0) {
+//                     addToOrder(name, price, image, quantity);
+//                     menuBox.querySelector('.quant').textContent = '0';
+//                 } else {
+//                     alert("Please select a quantity before placing the order.");
+//                 }
+//             });
+//         }
+
+//         const incrementButton = item.querySelector('.increment');
+//         const decrementButton = item.querySelector('.decrement');
+
+//         if (incrementButton) {
+//             incrementButton.addEventListener('click', () => {
+//                 const quantitySpan = incrementButton.nextElementSibling;
+//                 quantitySpan.textContent = parseInt(quantitySpan.textContent, 10) + 1;
+//             });
+//         }
+
+//         if (decrementButton) {
+//             decrementButton.addEventListener('click', () => {
+//                 const quantitySpan = decrementButton.previousElementSibling;
+//                 const currentQuantity = parseInt(quantitySpan.textContent, 10);
+//                 if (currentQuantity > 0) {
+//                     quantitySpan.textContent = currentQuantity - 1;
+//                 }
+//             });
+//         }
+//     };
+
+//     searchBar.addEventListener('input', searchItems);
+
+// });
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+// ================= CART STORAGE =================
+let orders = JSON.parse(localStorage.getItem('orders')) || [];
+
 const saveOrdersToLocalStorage = () => {
     localStorage.setItem('orders', JSON.stringify(orders));
 };
 
-// Add item to the orders array
 const addToOrders = (name, price, image, quantity) => {
+    if (quantity <= 0) {
+        alert("Please select quantity first");
+        return;
+    }
+
+    const numericPrice = Number(price.toString().replace(/[^0-9.]/g, '')) || 0;
+
     const existingItem = orders.find(item => item.name === name);
     if (existingItem) {
         existingItem.quantity += quantity;
     } else {
-        orders.push({ name, price, image, quantity });
+        orders.push({ name, price: numericPrice, image, quantity });
     }
 
-    saveOrdersToLocalStorage();  // Save the updated orders array to localStorage
-    alert(`${quantity}x ${name} added to your order.`);
+    saveOrdersToLocalStorage();
+
+    // ✅ Show alert
+    alert(`${quantity} × ${name} added to your cart.`);
 };
 
-// Function to dynamically generate and display items
+
+// ================= UNIVERSAL (DYNAMIC ITEMS) =================
 const universal = (items) => {
     const comboContainer = document.querySelector('.exploremore');
     comboContainer.style.display = "block";
+
     comboContainer.innerHTML = `
         <h4 class="h">Special Finds</h4>
         <button class="remove fas fa-times"></button>
-        <p class="p">Indulge in our expertly crafted coffees, refreshing drinks, and delicious, freshly prepared foods. Welcome to a taste of comfort and quality.</p>
+        <p class="p">Indulge in our expertly crafted coffees.</p>
         <hr class="hr">
+        <div class="main_container"></div>
     `;
 
-    const btnClose = comboContainer.querySelector(".remove");
-    btnClose.addEventListener("click", () => {
+    comboContainer.querySelector(".remove").onclick = () => {
         comboContainer.style.display = "none";
-    });
+    };
 
-    const mainContainer = document.createElement('div');
-    mainContainer.className = 'main_container';
+    const mainContainer = comboContainer.querySelector('.main_container');
 
     items.forEach(item => {
-        const specialContainer = document.createElement('div');
-        specialContainer.className = 'special-item';
-        specialContainer.innerHTML = `
-            <div class="sec1">
-                <div class="section" data-name="${item.name}" data-price="${item.price}" data-image="${item.image1}">
-                    <h4>Signature Sips</h4>
+        mainContainer.innerHTML += `
+            <div class="special-item">
+                <div class="section"
+                    data-name="${item.name}"
+                    data-price="${item.price}"
+                    data-image="${item.image1}">
                     <div class="secmain">
-                        <div class="img">
-                            <img src="${item.image1}" alt="${item.name}">
-                        </div>
+                        <img src="${item.image1}">
                         <h5>${item.name}</h5>
-                        <p>${item.price} <span>${item.price1}</span></p>
+                        <p>${item.price}</p>
                         <div class="quantity">
                             <button class="increment">+</button>
                             <span class="quant">0</span>
@@ -62,130 +353,154 @@ const universal = (items) => {
                 </div>
             </div>
         `;
-        mainContainer.appendChild(specialContainer);
-    });
-
-    comboContainer.appendChild(mainContainer);
-
-    // Add event listeners to dynamically added 'Place Order' buttons
-    mainContainer.querySelectorAll('.b1').forEach(button => {
-        button.addEventListener('click', function (event) {
-            event.preventDefault();
-            const foodItem = this.closest('.section');
-            const itemName = foodItem.getAttribute('data-name');
-            const itemPrice = foodItem.getAttribute('data-price');
-            const itemImage = foodItem.getAttribute('data-image');
-            const quantity = parseInt(foodItem.querySelector('.quant').textContent, 10);
-
-            addToOrders(itemName, itemPrice, itemImage, quantity);
-        });
-    });
-
-    // Add quantity controls for dynamic items
-    mainContainer.querySelectorAll('.increment').forEach(button => {
-        button.addEventListener('click', () => {
-            const quantitySpan = button.nextElementSibling;
-            quantitySpan.textContent = parseInt(quantitySpan.textContent, 10) + 1;
-        });
-    });
-
-    mainContainer.querySelectorAll('.decrement').forEach(button => {
-        button.addEventListener('click', () => {
-            const quantitySpan = button.previousElementSibling;
-            const currentQuantity = parseInt(quantitySpan.textContent, 10);
-            if (currentQuantity > 0) {
-                quantitySpan.textContent = currentQuantity - 1;
-            }
-        });
     });
 };
 
-
+// ================= DOM READY =================
 document.addEventListener('DOMContentLoaded', () => {
+
     const placeOrderContainer = document.querySelector(".placeorder_container");
-    const placeOrderButtons = document.querySelectorAll('.b1');
     const viewOrderButton = document.getElementById('plorder3');
-
-    // Attach event listeners to static 'Place Order' buttons
-    placeOrderButtons.forEach(button => {
-        button.addEventListener('click', () => {
-            const item = button.closest('.section');
-            const name = item.getAttribute('data-name');
-            const price = item.getAttribute('data-price');
-            const image = item.getAttribute('data-image');
-            const quantity = parseInt(item.querySelector('.quant').textContent, 10);
-
-            if (quantity > 0) {
-                addToOrders(name, price, image, quantity);
-                item.querySelector('.quant').textContent = '0'; // Reset quantity
-            } else {
-                alert("Please select a quantity before placing the order.");
-            }
-        });
-    });
-
-    // View order summary with toggle functionality
-    viewOrderButton.addEventListener('click', () => {
-        if (placeOrderContainer.style.display === 'block') {
-            placeOrderContainer.style.display = 'none';
-        } else {
-            placeOrderContainer.innerHTML = '';
-            if (orders.length === 0) {
-                placeOrderContainer.innerHTML = `<p>Your order list is empty.</p>
-                <div class="img"> </div>`;
-            } else {
-                orders.forEach((item, index) => {
-                    const orderItem = document.createElement('div');
-                    orderItem.className = 'order-item';
-                    orderItem.innerHTML = `
-                        <img src="${item.image}" alt="${item.name}">
-                        <span>${item.quantity}x ${item.name} - ${item.price}</span>
-                        <button class="remove-button" data-index="${index}">Cancel Order</button>
-                    `;
-                    placeOrderContainer.appendChild(orderItem);
-                });
-
-                // Attach remove functionality to each order item
-                placeOrderContainer.querySelectorAll('.remove-button').forEach(button => {
-                    button.addEventListener('click', () => {
-                        const index = button.getAttribute('data-index');
-                        orders.splice(index, 1);
-                        saveOrdersToLocalStorage();  // Save the updated orders array to localStorage
-                        viewOrderButton.click(); // Refresh order view
-                    });
-                });
-            }
-            placeOrderContainer.style.display = 'block';
-        }
-    });
-});
-
-
-// SEARCH BAR
-
-document.addEventListener('DOMContentLoaded', () => {
     const searchBar = document.getElementById('search-box');
     const searchContainer = document.querySelector('.search-container');
 
-    const searchItems = () => {
+    // ================= EVENT DELEGATION =================
+document.addEventListener('click', function (e) {
+
+    // ================= INCREMENT =================
+    const incBtn = e.target.closest('.increment');
+    if (incBtn) {
+        e.preventDefault();
+        e.stopPropagation();
+
+        const quantitySpan = incBtn.closest('.quantity').querySelector('.quant');
+        quantitySpan.textContent = Number(quantitySpan.textContent) + 1;
+        return;
+    }
+
+    // ================= DECREMENT =================
+    const decBtn = e.target.closest('.decrement');
+    if (decBtn) {
+        e.preventDefault();
+        e.stopPropagation();
+
+        const quantitySpan = decBtn.closest('.quantity').querySelector('.quant');
+        quantitySpan.textContent = Math.max(0, Number(quantitySpan.textContent) - 1);
+        return;
+    }
+
+    // ================= ADD TO CART =================
+    const addBtn = e.target.closest('.b1');
+    if (addBtn) {
+        e.preventDefault();
+
+        const section = addBtn.closest('.section, .menu-box');
+        if (!section) return;
+
+        const quantitySpan = section.querySelector('.quant');
+        const quantity = Number(quantitySpan.textContent);
+
+        if (quantity <= 0) {
+            alert("Please select quantity first");
+            return;
+        }
+
+        addToOrders(
+            section.dataset.name,
+            section.dataset.price,
+            section.dataset.image,
+            quantity
+        );
+
+        quantitySpan.textContent = '0';
+    }
+
+});
+
+
+
+
+    // ================= VIEW ORDER TOGGLE =================
+
+    let isOrderOpen = false;
+        viewOrderButton.addEventListener('click', () => {
+
+            if (!isOrderOpen) {
+                renderOrders();                 // render ONLY when opening
+                placeOrderContainer.classList.add('open');
+                isOrderOpen = true;
+            } else {
+                placeOrderContainer.classList.remove('open');
+                isOrderOpen = false;
+            }
+
+        });
+
+
+
+        // ================= UPDATE TOTALS =================
+       const updateTotals = () => {
+    const totalQtyEl = document.querySelector('.total .qty');
+    const totalPriceEl = document.querySelector('.total .t-price');
+    const gstEl = document.querySelector('.total .tgst');
+    const finalPriceEl = document.querySelector('.total .f-price');
+
+    if (!totalQtyEl || !totalPriceEl || !gstEl || !finalPriceEl) return;
+
+    let totalQty = 0;
+    let totalPrice = 0;
+
+    orders.forEach(item => {
+        totalQty += item.quantity;
+        totalPrice += item.price * item.quantity;
+    });
+
+    const gst = +(totalPrice * 0.18).toFixed(2);
+    const finalPrice = +(totalPrice + gst).toFixed(2);
+
+    totalQtyEl.textContent = totalQty;
+    totalPriceEl.textContent = `₹${totalPrice.toFixed(2)}`;
+    gstEl.textContent = `₹${gst.toFixed(2)}`;
+    finalPriceEl.textContent = `₹${finalPrice.toFixed(2)}`;
+};
+
+const renderOrders = () => {
+    const itemsContainer = document.querySelector('.plordercont');
+    itemsContainer.innerHTML = '';
+
+    if (!orders.length) {
+        itemsContainer.innerHTML = `<p>Your order list is empty.</p>`;
+        updateTotals();
+        return;
+    }
+
+    orders.forEach((item, index) => {
+        itemsContainer.innerHTML += `
+            <div class="order-item">
+                <img src="${item.image}" alt="${item.name}">
+                <div class="order-info">
+                    <span class="order-name">${item.name}</span>
+                    <span class="order-qty">${item.quantity} × ₹${item.price}</span>
+                </div>
+                <button class="remove-button" data-index="${index}">✕</button>
+            </div>
+        `;
+    });
+
+    updateTotals();
+};
+
+
+    // ================= SEARCH =================
+    searchBar.addEventListener('input', () => {
         const query = searchBar.value.toLowerCase().trim();
 
         searchContainer.innerHTML = `
             <button class="remove fas fa-times"></button>
+            <div class="search-results-box"></div>
         `;
 
-        const btnClose = searchContainer.querySelector(".remove");
-        btnClose.addEventListener("click", () => {
-            searchContainer.style.display = 'none';
-            searchBar.value = '';
-        });
-
-        const searchResultsBox = document.createElement('div');
-        searchResultsBox.className = 'search-results-box';
-        searchContainer.appendChild(searchResultsBox);
-
-        const menuBoxes = document.querySelectorAll('.menu-box');
-        const sections = document.querySelectorAll('.section');
+        const resultsBox = searchContainer.querySelector('.search-results-box');
 
         if (!query) {
             searchContainer.style.display = 'none';
@@ -193,85 +508,58 @@ document.addEventListener('DOMContentLoaded', () => {
         }
 
         searchContainer.style.display = 'block';
-        let resultsFound = false;
 
-        menuBoxes.forEach(menuBox => {
-            const name = menuBox.querySelector('.name')?.textContent.toLowerCase();
+        let found = false;
+
+        document.querySelectorAll('.menu-box').forEach(menu => {
+            const name = menu.querySelector('.name')?.textContent.toLowerCase();
             if (name && name.includes(query)) {
-                const clonedItem = menuBox.cloneNode(true);
-                addDynamicEventListeners(clonedItem);
-                searchResultsBox.appendChild(clonedItem);
-                resultsFound = true;
+                resultsBox.appendChild(menu.cloneNode(true));
+                found = true;
             }
         });
 
-        sections.forEach(section => {
-            const name = section.querySelector('.name')?.textContent.toLowerCase();
-            if (name && name.includes(query)) {
-                const clonedItem = section.cloneNode(true);
-                addDynamicEventListeners(clonedItem);
-                searchResultsBox.appendChild(clonedItem);
-                resultsFound = true;
-            }
-        });
-
-        if (resultsFound) {
-            const heading = document.createElement('h4');
-            heading.className = 'h';
-            heading.textContent = 'Your Search Results';
-            searchContainer.insertBefore(heading, searchResultsBox);
-        } else {
-            const noResultsMessage = document.createElement('h2');
-            noResultsMessage.textContent = 'No results found.';
-            searchResultsBox.appendChild(noResultsMessage);
-        }
-    };
-
-    const addDynamicEventListeners = (item) => {
-        // Attach functionality to the "Place Order" button
-        const placeOrderButton = item.querySelector('.b1');
-        if (placeOrderButton) {
-            placeOrderButton.addEventListener('click', function (event) {
-                event.preventDefault();
-                const foodItem = this.closest('.section');
-                const itemName = foodItem.getAttribute('data-name');
-                const itemPrice = foodItem.getAttribute('data-price');
-                const itemImage = foodItem.getAttribute('data-image');
-                const quantity = parseInt(foodItem.querySelector('.quant').textContent, 10);
-
-                if (quantity > 0) {
-                    addToOrders(itemName, itemPrice, itemImage, quantity);
-                    foodItem.querySelector('.quant').textContent = '0'; // Reset quantity
-                } else {
-                    alert("Please select a quantity before placing the order.");
-                }
-            });
+        if (!found) {
+            resultsBox.innerHTML = `<p>No results found</p>`;
         }
 
-        // Attach functionality to increment and decrement buttons
-        const incrementButton = item.querySelector('.increment');
-        const decrementButton = item.querySelector('.decrement');
+        searchContainer.querySelector('.remove').onclick = () => {
+            searchContainer.style.display = 'none';
+            searchBar.value = '';
+        };
+    });
 
-        if (incrementButton) {
-            incrementButton.addEventListener('click', () => {
-                const quantitySpan = incrementButton.nextElementSibling;
-                quantitySpan.textContent = parseInt(quantitySpan.textContent, 10) + 1;
-            });
-        }
 
-        if (decrementButton) {
-            decrementButton.addEventListener('click', () => {
-                const quantitySpan = decrementButton.previousElementSibling;
-                const currentQuantity = parseInt(quantitySpan.textContent, 10);
-                if (currentQuantity > 0) {
-                    quantitySpan.textContent = currentQuantity - 1;
-                }
-            });
-        }
-    };
-
-    searchBar.addEventListener('input', searchItems);
 });
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
 
 
 
