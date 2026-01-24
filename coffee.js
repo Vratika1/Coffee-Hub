@@ -369,110 +369,116 @@ const addToOrder = (name, price, image, quantity) => {
 document.addEventListener('DOMContentLoaded', () => {
    
 
-    // Initialize totals on page load
-    updateTotals();
+    // Initialize totals on page load (only if total elements exist)
+    const totalQtyEl = document.querySelector('.total .qty');
+    if (totalQtyEl) {
+        updateTotals();
+    }
 
+    // Only initialize menu-box specific code if they exist (for index.html)
+    const menuBoxes = document.querySelectorAll('.menu-box');
+    if (menuBoxes.length > 0) {
+        
+        // Quantity Management
+        document.querySelectorAll('.quantity').forEach(item => {
+            const decrement = item.querySelector(".decrement");
+            const increment = item.querySelector(".increment");
+            const quant = item.querySelector(".quant");
 
-    // Quantity Management
-    document.querySelectorAll('.quantity').forEach(item => {
-        const decrement = item.querySelector(".decrement");
-        const increment = item.querySelector(".increment");
-        const quant = item.querySelector(".quant");
+            increment.addEventListener('click', () => {
+                let currquant = parseInt(quant.textContent, 10);
+                quant.textContent = currquant + 1;
+            });
 
-        increment.addEventListener('click', () => {
-            let currquant = parseInt(quant.textContent, 10);
-            quant.textContent = currquant + 1;
+            decrement.addEventListener('click', () => {
+                let currquant = parseInt(quant.textContent, 10);
+                if (currquant > 0) {
+                    quant.textContent = currquant - 1;
+                }
+            });
         });
 
-        decrement.addEventListener('click', () => {
-            let currquant = parseInt(quant.textContent, 10);
-            if (currquant > 0) {
-                quant.textContent = currquant - 1;
+        // Place Order Logic
+        placeOrderButtons.forEach(button => {
+            button.addEventListener('click', () => {
+                const menuBox = button.closest('.menu-box');
+                const name = menuBox.getAttribute('data-name');
+                const price = menuBox.getAttribute('data-price');
+                const image = menuBox.getAttribute('data-image');
+                const quantity = parseInt(menuBox.querySelector('.quant').textContent, 10);
+
+                if (quantity > 0) {
+                    addToOrder(name, price, image, quantity);
+                    menuBox.querySelector('.quant').textContent = '0'; // Reset quantity
+                } else {
+                    alert("Please select a quantity before placing the order.");
+                }
+            });
+        });
+
+        // View Order Logic with Toggle Functionality
+        viewOrderButton.addEventListener('click', () => {
+             const placeOrderContainer = document.querySelector('.placeorder_container');
+                if (placeOrderContainer.style.display === 'block') {
+                    placeOrderContainer.style.display = 'none';
+                } else {
+                    renderOrderItems(); // Render all items
+                    placeOrderContainer.style.display = 'block';
+                }
+        });
+
+        // SEARCH BAR
+        const searchBar = document.getElementById('search-box');
+        const searchContainer = document.querySelector('.search-container');
+
+        const searchItems = () => {
+            const query = searchBar.value.toLowerCase().trim();
+
+            searchContainer.innerHTML = `
+                <button class="remove fas fa-times"></button>
+            `;
+
+            const btnClose = searchContainer.querySelector(".remove");
+            btnClose.addEventListener("click", () => {
+                searchContainer.style.display = "none";
+                searchBar.value = '';
+            });
+
+            const searchResultsBox = document.createElement('div');
+            searchResultsBox.className = 'search-results-box';
+            searchContainer.appendChild(searchResultsBox);
+
+            const menuBoxes = document.querySelectorAll('.menu-box');
+
+            if (!query) {
+                searchContainer.style.display = 'none';
+                return;
             }
-        });
-    });
 
-    // Place Order Logic
-    placeOrderButtons.forEach(button => {
-        button.addEventListener('click', () => {
-            const menuBox = button.closest('.menu-box');
-            const name = menuBox.getAttribute('data-name');
-            const price = menuBox.getAttribute('data-price');
-            const image = menuBox.getAttribute('data-image');
-            const quantity = parseInt(menuBox.querySelector('.quant').textContent, 10);
+            searchContainer.style.display = 'block';
+            let resultsFound = false;
 
-            if (quantity > 0) {
-                addToOrder(name, price, image, quantity);
-                menuBox.querySelector('.quant').textContent = '0'; // Reset quantity
+            menuBoxes.forEach(menuBox => {
+                const name = menuBox.querySelector('.name')?.textContent.toLowerCase();
+                if (name && name.includes(query)) {
+                    const clonedItem = menuBox.cloneNode(true);
+                    addDynamicEventListeners(clonedItem);
+                    searchResultsBox.appendChild(clonedItem);
+                    resultsFound = true;
+                }
+            });
+
+            if (resultsFound) {
+                const heading = document.createElement('h4');
+                heading.className = 'h';
+                heading.textContent = 'Your Search Results';
+                searchContainer.insertBefore(heading, searchResultsBox);
             } else {
-                alert("Please select a quantity before placing the order.");
+                const noResultsMessage = document.createElement('h2');
+                noResultsMessage.textContent = 'No results found.';
+                searchResultsBox.appendChild(noResultsMessage);
             }
-        });
-    });
-
-    // View Order Logic with Toggle Functionality
-    viewOrderButton.addEventListener('click', () => {
-         const placeOrderContainer = document.querySelector('.placeorder_container');
-            if (placeOrderContainer.style.display === 'block') {
-                placeOrderContainer.style.display = 'none';
-            } else {
-                renderOrderItems(); // Render all items
-                placeOrderContainer.style.display = 'block';
-            }
-    });
-
-    // SEARCH BAR
-    const searchBar = document.getElementById('search-box');
-    const searchContainer = document.querySelector('.search-container');
-
-    const searchItems = () => {
-        const query = searchBar.value.toLowerCase().trim();
-
-        searchContainer.innerHTML = `
-            <button class="remove fas fa-times"></button>
-        `;
-
-        const btnClose = searchContainer.querySelector(".remove");
-        btnClose.addEventListener("click", () => {
-            searchContainer.style.display = "none";
-            searchBar.value = '';
-        });
-
-        const searchResultsBox = document.createElement('div');
-        searchResultsBox.className = 'search-results-box';
-        searchContainer.appendChild(searchResultsBox);
-
-        const menuBoxes = document.querySelectorAll('.menu-box');
-
-        if (!query) {
-            searchContainer.style.display = 'none';
-            return;
-        }
-
-        searchContainer.style.display = 'block';
-        let resultsFound = false;
-
-        menuBoxes.forEach(menuBox => {
-            const name = menuBox.querySelector('.name')?.textContent.toLowerCase();
-            if (name && name.includes(query)) {
-                const clonedItem = menuBox.cloneNode(true);
-                addDynamicEventListeners(clonedItem);
-                searchResultsBox.appendChild(clonedItem);
-                resultsFound = true;
-            }
-        });
-
-        if (resultsFound) {
-            const heading = document.createElement('h4');
-            heading.className = 'h';
-            heading.textContent = 'Your Search Results';
-            searchContainer.insertBefore(heading, searchResultsBox);
-        } else {
-            const noResultsMessage = document.createElement('h2');
-            noResultsMessage.textContent = 'No results found.';
-            searchResultsBox.appendChild(noResultsMessage);
-        }
-    };
+        };
 
     const addDynamicEventListeners = (item) => {
         const placeOrderButton = item.querySelector('.b1');
@@ -516,6 +522,9 @@ document.addEventListener('DOMContentLoaded', () => {
     };
 
     searchBar.addEventListener('input', searchItems);
+
+    } // End of menu-box specific code
+
 });
 
 

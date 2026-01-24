@@ -1,288 +1,4 @@
 
-// // Orders array to store items added to the cart
-// let orders = JSON.parse(localStorage.getItem('orders')) || []; // Load orders from localStorage if available
-
-// // Save orders to localStorage whenever it changes
-// const saveOrdersToLocalStorage = () => {
-//     localStorage.setItem('orders', JSON.stringify(orders));
-// };
-
-// // Add item to the orders array
-// const addToOrders = (name, price, image, quantity) => {
-//     const existingItem = orders.find(item => item.name === name);
-//     if (existingItem) {
-//         existingItem.quantity += quantity;
-//     } else {
-//         orders.push({ name, price, image, quantity });
-//     }
-
-//     saveOrdersToLocalStorage();  // Save the updated orders array to localStorage
-//     alert(`${quantity}x ${name} added to your order.`);
-// };
-
-
-
-
-// // Function to dynamically generate and display items
-// const universal = (items) => {
-//     const comboContainer = document.querySelector('.exploremore');
-//     comboContainer.style.display = "block";
-//     comboContainer.innerHTML = `
-//         <h4 class="h">Special Finds</h4>
-//         <button class="remove fas fa-times"></button>
-//         <p class="p">Indulge in our expertly crafted coffees, refreshing drinks, and delicious, freshly prepared foods. Welcome to a taste of comfort and quality.</p>
-//         <hr class="hr">
-//     `;
-
-//     const btnClose = comboContainer.querySelector(".remove");
-//     btnClose.addEventListener("click", () => {
-//         comboContainer.style.display = "none";
-//     });
-
-//     const mainContainer = document.createElement('div');
-//     mainContainer.className = 'main_container';
-
-//     items.forEach(item => {
-//         const specialContainer = document.createElement('div');
-//         specialContainer.className = 'special-item';
-//         specialContainer.innerHTML = `
-//             <div class="sec1">
-//                 <div class="section" data-name="${item.name}" data-price="${item.price}" data-image="${item.image1}">
-//                     <h4>Signature Sips</h4>
-//                     <div class="secmain">
-//                         <div class="img">
-//                             <img src="${item.image1}" alt="${item.name}">
-//                         </div>
-//                         <h5>${item.name}</h5>
-//                         <p>${item.price} <span>${item.price1}</span></p>
-//                         <div class="quantity">
-//                             <button class="increment">+</button>
-//                             <span class="quant">0</span>
-//                             <button class="decrement">-</button>
-//                         </div>
-//                         <a href="#" class="btn b1">Place Order</a>
-//                     </div>
-//                 </div>
-//             </div>
-//         `;
-//         mainContainer.appendChild(specialContainer);
-//     });
-
-//     comboContainer.appendChild(mainContainer);
-
-//     // Add event listeners to dynamically added 'Place Order' buttons
-//     mainContainer.querySelectorAll('.b1').forEach(button => {
-//         button.addEventListener('click', function (event) {
-//             event.preventDefault();
-//             const foodItem = this.closest('.section');
-//             const itemName = foodItem.getAttribute('data-name');
-//             const itemPrice = foodItem.getAttribute('data-price');
-//             const itemImage = foodItem.getAttribute('data-image');
-//             const quantity = parseInt(foodItem.querySelector('.quant').textContent, 10);
-
-//             addToOrders(itemName, itemPrice, itemImage, quantity);
-//         });
-//     });
-
-//     // Add quantity controls for dynamic items
-//     mainContainer.querySelectorAll('.increment').forEach(button => {
-//         button.addEventListener('click', () => {
-//             const quantitySpan = button.nextElementSibling;
-//             quantitySpan.textContent = parseInt(quantitySpan.textContent, 10) + 1;
-//         });
-//     });
-
-//     mainContainer.querySelectorAll('.decrement').forEach(button => {
-//         button.addEventListener('click', () => {
-//             const quantitySpan = button.previousElementSibling;
-//             const currentQuantity = parseInt(quantitySpan.textContent, 10);
-//             if (currentQuantity > 0) {
-//                 quantitySpan.textContent = currentQuantity - 1;
-//             }
-//         });
-//     });
-// };
-
-
-// document.addEventListener('DOMContentLoaded', () => {
-//     const placeOrderContainer = document.querySelector(".placeorder_container");
-//     const placeOrderButtons = document.querySelectorAll('.b1');
-//     const viewOrderButton = document.getElementById('plorder3');
-
-//     // Attach event listeners to static 'Place Order' buttons
-//     placeOrderButtons.forEach(button => {
-//         button.addEventListener('click', () => {
-//             const item = button.closest('.section');
-//             const name = item.getAttribute('data-name');
-//             const price = item.getAttribute('data-price');
-//             const image = item.getAttribute('data-image');
-//             const quantity = parseInt(item.querySelector('.quant').textContent, 10);
-
-//             if (quantity > 0) {
-//                 addToOrders(name, price, image, quantity);
-//                 item.querySelector('.quant').textContent = '0'; // Reset quantity
-//             } else {
-//                 alert("Please select a quantity before placing the order.");
-//             }
-//         });
-//     });
-
-//     // View order summary with toggle functionality
-//     viewOrderButton.addEventListener('click', () => {
-//         if (placeOrderContainer.style.display === 'block') {
-//             placeOrderContainer.style.display = 'none';
-//         } else {
-//             placeOrderContainer.innerHTML = '';
-//             if (orders.length === 0) {
-//                 placeOrderContainer.innerHTML = `<p>Your order list is empty.</p>
-//                 <div class="img"> </div>`;
-//             } else {
-//                 orders.forEach((item, index) => {
-//                     const orderItem = document.createElement('div');
-//                     orderItem.className = 'order-item';
-//                     orderItem.innerHTML = `
-//                         <img src="${item.image}" alt="${item.name}">
-//                         <span>${item.quantity}x ${item.name} - ${item.price}</span>
-//                         <button class="remove-button" data-index="${index}">Cancel Order</button>
-//                     `;
-//                     placeOrderContainer.appendChild(orderItem);
-//                 });
-
-//                 // Attach remove functionality to each order item
-//                 placeOrderContainer.querySelectorAll('.remove-button').forEach(button => {
-//                     button.addEventListener('click', () => {
-//                         const index = button.getAttribute('data-index');
-//                         orders.splice(index, 1);
-//                         saveOrdersToLocalStorage();  // Save the updated orders array to localStorage
-//                         viewOrderButton.click(); // Refresh order view
-//                     });
-//                 });
-//             }
-//             placeOrderContainer.style.display = 'block';
-//         }
-//     });
-// });
-
-
-// // SEARCH BAR
-
-// document.addEventListener('DOMContentLoaded', () => {
-//    // SEARCH BAR
-//     const searchBar = document.getElementById('search-box');
-//     const searchContainer = document.querySelector('.search-container');
-
-//     const searchItems = () => {
-//         const query = searchBar.value.toLowerCase().trim();
-
-//         searchContainer.innerHTML = `
-//             <button class="remove fas fa-times"></button>
-//         `;
-
-//         const btnClose = searchContainer.querySelector(".remove");
-//         btnClose.addEventListener("click", () => {
-//             searchContainer.style.display = "none";
-//             searchBar.value = '';
-//         });
-
-//         const searchResultsBox = document.createElement('div');
-//         searchResultsBox.className = 'search-results-box';
-//         searchContainer.appendChild(searchResultsBox);
-
-//         const menuBoxes = document.querySelectorAll('.menu-box');
-
-//         if (!query) {
-//             searchContainer.style.display = 'none';
-//             return;
-//         }
-
-//         searchContainer.style.display = 'block';
-//         let resultsFound = false;
-
-//         menuBoxes.forEach(menuBox => {
-//             const name = menuBox.querySelector('.name')?.textContent.toLowerCase();
-//             if (name && name.includes(query)) {
-//                 const clonedItem = menuBox.cloneNode(true);
-//                 addDynamicEventListeners(clonedItem);
-//                 searchResultsBox.appendChild(clonedItem);
-//                 resultsFound = true;
-//             }
-//         });
-
-//         if (resultsFound) {
-//             const heading = document.createElement('h4');
-//             heading.className = 'h';
-//             heading.textContent = 'Your Search Results';
-//             searchContainer.insertBefore(heading, searchResultsBox);
-//         } else {
-//             const noResultsMessage = document.createElement('h2');
-//             noResultsMessage.textContent = 'No results found.';
-//             searchResultsBox.appendChild(noResultsMessage);
-//         }
-//     };
-
-//     const addDynamicEventListeners = (item) => {
-//         const placeOrderButton = item.querySelector('.b1');
-//         if (placeOrderButton) {
-//             placeOrderButton.addEventListener('click', function (event) {
-//                 event.preventDefault();
-//                 const menuBox = this.closest('.menu-box');
-//                 const name = menuBox.getAttribute('data-name');
-//                 const price = menuBox.getAttribute('data-price');
-//                 const image = menuBox.getAttribute('data-image');
-//                 const quantity = parseInt(menuBox.querySelector('.quant').textContent, 10);
-
-//                 if (quantity > 0) {
-//                     addToOrder(name, price, image, quantity);
-//                     menuBox.querySelector('.quant').textContent = '0';
-//                 } else {
-//                     alert("Please select a quantity before placing the order.");
-//                 }
-//             });
-//         }
-
-//         const incrementButton = item.querySelector('.increment');
-//         const decrementButton = item.querySelector('.decrement');
-
-//         if (incrementButton) {
-//             incrementButton.addEventListener('click', () => {
-//                 const quantitySpan = incrementButton.nextElementSibling;
-//                 quantitySpan.textContent = parseInt(quantitySpan.textContent, 10) + 1;
-//             });
-//         }
-
-//         if (decrementButton) {
-//             decrementButton.addEventListener('click', () => {
-//                 const quantitySpan = decrementButton.previousElementSibling;
-//                 const currentQuantity = parseInt(quantitySpan.textContent, 10);
-//                 if (currentQuantity > 0) {
-//                     quantitySpan.textContent = currentQuantity - 1;
-//                 }
-//             });
-//         }
-//     };
-
-//     searchBar.addEventListener('input', searchItems);
-
-// });
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
 
 // ================= CART STORAGE =================
 let orders = JSON.parse(localStorage.getItem('orders')) || [];
@@ -363,6 +79,160 @@ document.addEventListener('DOMContentLoaded', () => {
     const viewOrderButton = document.getElementById('plorder3');
     const searchBar = document.getElementById('search-box');
     const searchContainer = document.querySelector('.search-container');
+    const searchIcon = document.getElementById('search-icon');
+    const wishIcon = document.getElementById('wish-icon');
+    const cartIcon = document.getElementById('cart-icon');
+    const searchForm = document.querySelector('.search-form');
+    const cartItemsContainer = document.querySelector('.cart-items-container');
+    const wishlistContainer = document.querySelector('.wishlist-container');
+
+    // Initialize - hide place order container by default
+    if (placeOrderContainer) {
+        placeOrderContainer.style.display = 'none';
+    }
+
+    // Initialize - hide search container by default
+    if (searchContainer) {
+        searchContainer.style.display = 'none';
+    }
+
+    // Initialize cart container with empty message
+    if (cartItemsContainer) {
+        const cart = JSON.parse(localStorage.getItem('cart')) || [];
+        if (cart.length === 0) {
+            cartItemsContainer.innerHTML = `<p>Your cart is empty.</p><div class="img"></div>`;
+        }
+        cartItemsContainer.style.display = 'none';
+    }
+
+    // Initialize wishlist container with empty message
+    if (wishlistContainer) {
+        const wishlist = JSON.parse(localStorage.getItem('wishlist')) || [];
+        if (wishlist.length === 0) {
+            wishlistContainer.innerHTML = `<p>Your wishlist is empty.</p><div class="img"></div>`;
+        }
+        wishlistContainer.style.display = 'none';
+    }
+
+    // ================= SEARCH ICON CLICK =================
+    if (searchIcon) {
+        searchIcon.addEventListener('click', () => {
+            if (searchForm) {
+                searchForm.classList.toggle('show');
+            }
+            if (placeOrderContainer) {
+                placeOrderContainer.style.display = 'none';
+            }
+            if (cartItemsContainer) {
+                cartItemsContainer.style.display = 'none';
+            }
+            if (wishlistContainer) {
+                wishlistContainer.style.display = 'none';
+            }
+        });
+    }
+
+    // ================= WISH ICON CLICK =================
+    if (wishIcon) {
+        wishIcon.addEventListener('click', () => {
+            if (wishlistContainer) {
+                if (wishlistContainer.style.display === 'block') {
+                    wishlistContainer.style.display = 'none';
+                } else {
+                    // Load wishlist from localStorage
+                    const wishlist = JSON.parse(localStorage.getItem('wishlist')) || [];
+                    wishlistContainer.innerHTML = '';
+                    
+                    if (wishlist.length === 0) {
+                        wishlistContainer.innerHTML = `<p>Your wishlist is empty.</p><div class="img"></div>`;
+                    } else {
+                        wishlist.forEach((item, index) => {
+                            wishlistContainer.innerHTML += `
+                                <div class="wish-item">
+                                    <img src="${item.image}" alt="${item.name}">
+                                    <span>${item.name} - $${item.price}</span>
+                                    <button class="remove-button fas fa-times" data-index="${index}"></button>
+                                </div>
+                            `;
+                        });
+                        
+                        // Add remove event listeners
+                        wishlistContainer.querySelectorAll('.remove-button').forEach(btn => {
+                            btn.addEventListener('click', () => {
+                                const index = btn.getAttribute('data-index');
+                                wishlist.splice(index, 1);
+                                localStorage.setItem('wishlist', JSON.stringify(wishlist));
+                                wishIcon.click(); // Refresh the view
+                            });
+                        });
+                    }
+                    
+                    wishlistContainer.style.display = 'block';
+                    wishlistContainer.style.position = 'fixed';
+                }
+            }
+            if (placeOrderContainer) {
+                placeOrderContainer.style.display = 'none';
+            }
+            if (cartItemsContainer) {
+                cartItemsContainer.style.display = 'none';
+            }
+            if (searchForm) {
+                searchForm.classList.remove('show');
+            }
+        });
+    }
+
+    // ================= CART ICON CLICK =================
+    if (cartIcon) {
+        cartIcon.addEventListener('click', () => {
+            if (cartItemsContainer) {
+                if (cartItemsContainer.style.display === 'block') {
+                    cartItemsContainer.style.display = 'none';
+                } else {
+                    // Load cart from localStorage
+                    const cart = JSON.parse(localStorage.getItem('cart')) || [];
+                    cartItemsContainer.innerHTML = '';
+                    
+                    if (cart.length === 0) {
+                        cartItemsContainer.innerHTML = `<p>Your cart is empty.</p><div class="img"></div>`;
+                    } else {
+                        cart.forEach((item, index) => {
+                            cartItemsContainer.innerHTML += `
+                                <div class="cart-item">
+                                    <img src="${item.image}" alt="${item.name}">
+                                    <span>${item.name} - $${item.price}</span>
+                                    <button class="remove-button fas fa-times" data-index="${index}"></button>
+                                </div>
+                            `;
+                        });
+                        
+                        // Add remove event listeners
+                        cartItemsContainer.querySelectorAll('.remove-button').forEach(btn => {
+                            btn.addEventListener('click', () => {
+                                const index = btn.getAttribute('data-index');
+                                cart.splice(index, 1);
+                                localStorage.setItem('cart', JSON.stringify(cart));
+                                cartIcon.click(); // Refresh the view
+                            });
+                        });
+                    }
+                    
+                    cartItemsContainer.style.display = 'block';
+                    cartItemsContainer.style.position = 'fixed';
+                }
+            }
+            if (placeOrderContainer) {
+                placeOrderContainer.style.display = 'none';
+            }
+            if (wishlistContainer) {
+                wishlistContainer.style.display = 'none';
+            }
+            if (searchForm) {
+                searchForm.classList.remove('show');
+            }
+        });
+    }
 
     // ================= EVENT DELEGATION =================
 document.addEventListener('click', function (e) {
@@ -415,6 +285,16 @@ document.addEventListener('click', function (e) {
         quantitySpan.textContent = '0';
     }
 
+    // ================= REMOVE FROM ORDER =================
+    const removeBtn = e.target.closest('.remove-button');
+    if (removeBtn) {
+        e.preventDefault();
+        const index = removeBtn.getAttribute('data-index');
+        orders.splice(index, 1);
+        saveOrdersToLocalStorage();
+        renderOrders();  // Re-render the order list
+    }
+
 });
 
 
@@ -428,9 +308,11 @@ document.addEventListener('click', function (e) {
             if (!isOrderOpen) {
                 renderOrders();                 // render ONLY when opening
                 placeOrderContainer.classList.add('open');
+                placeOrderContainer.style.display = 'block';
                 isOrderOpen = true;
             } else {
                 placeOrderContainer.classList.remove('open');
+                placeOrderContainer.style.display = 'none';
                 isOrderOpen = false;
             }
 
@@ -468,9 +350,12 @@ const renderOrders = () => {
     const itemsContainer = document.querySelector('.plordercont');
     itemsContainer.innerHTML = '';
 
-    if (!orders.length) {
-        itemsContainer.innerHTML = `<p>Your order list is empty.</p>`;
-        updateTotals();
+
+     if (orders.length === 0) {
+        itemsContainer.innerHTML = `
+            <p>Your order list is empty.</p>
+            <div class="img"></div>`;
+            updateTotals(); // Ensure totals are updated
         return;
     }
 
@@ -511,10 +396,12 @@ const renderOrders = () => {
 
         let found = false;
 
-        document.querySelectorAll('.menu-box').forEach(menu => {
-            const name = menu.querySelector('.name')?.textContent.toLowerCase();
+        // Search in both .menu-box (index.html) and .section (specialcombos.html)
+        document.querySelectorAll('.menu-box, .section').forEach(item => {
+            const name = item.querySelector('.name')?.textContent.toLowerCase();
             if (name && name.includes(query)) {
-                resultsBox.appendChild(menu.cloneNode(true));
+                const clonedItem = item.cloneNode(true);
+                resultsBox.appendChild(clonedItem);
                 found = true;
             }
         });
@@ -529,6 +416,29 @@ const renderOrders = () => {
         };
     });
 
+
+    // ================= CLOSE CONTAINERS ON SCROLL =================
+    let lastScrollTop = 0;
+    window.addEventListener('scroll', () => {
+        const currentScroll = window.scrollY || document.documentElement.scrollTop;
+
+        // Close containers only when scrolling down
+        if (currentScroll > lastScrollTop) {
+            // Close place order container
+            if (placeOrderContainer && placeOrderContainer.style.display === 'block') {
+                placeOrderContainer.style.display = 'none';
+                isOrderOpen = false;
+            }
+
+            // Close search container
+            if (searchContainer && searchContainer.style.display === 'block') {
+                searchContainer.style.display = 'none';
+                searchBar.value = '';
+            }
+        }
+
+        lastScrollTop = currentScroll <= 0 ? 0 : currentScroll;
+    });
 
 });
 

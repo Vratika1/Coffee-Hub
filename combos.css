@@ -67,52 +67,6 @@ section{
 }
 
 
-
-.placeorder_container{
-    position: absolute;
-    top:20%;
-    left:0;
-    height: 90vh;
-    z-index: 1200;
-    width: 35rem;
-    color: white;
-    background-color: #4d4855;
-    background-image: linear-gradient(147deg, #4d4855 0%, #000000 74%);
-    padding: 0 1rem;
-    margin-left: 3rem;
-    display: none; 
-}
-
-.order_container {
-    position: absolute !important;
-    top: 20%;
-    left: 0;
-    height: 20vh;
-    width: 35rem;
-    color: white;
-    background-color: #4d4855;
-    background-image: linear-gradient(147deg, #4d4855 0%, #000000 74%);
-    padding: 0 1rem;
-    margin-left: 2rem;
-    display: flex;
-    z-index: 1200;
-    flex-direction: column;
-    justify-content: center;
-    text-align: center;
-    text-transform: capitalize;
-    font-size: 2rem;
-    display: none;
-    overflow: auto;
-}
-
-.order_container.o2 {
-    display: block !important;
-    display: flex !important;
-    flex-direction: column !important;
-    position: fixed;
-    width: 30rem;
-}
-
 .account_container {
     position: absolute;
     top: 20%;
@@ -145,7 +99,8 @@ section{
     max-width: 600px; 
     height: auto; 
     max-height: 80vh; 
-    overflow-y: auto; 
+    overflow-y: auto;
+    overflow-x: hidden; 
     background-color: black;
     color: whitesmoke; 
     border: 0.2rem solid rgb(72, 72, 72);
@@ -156,6 +111,23 @@ section{
     display: none; 
     position: fixed;
     z-index: 1200; 
+}
+
+.search-container::-webkit-scrollbar {
+    width: 8px;
+}
+
+.search-container::-webkit-scrollbar-track {
+    background: transparent;
+}
+
+.search-container::-webkit-scrollbar-thumb {
+    background: rgb(138, 112, 65);
+    border-radius: 4px;
+}
+
+.search-container::-webkit-scrollbar-thumb:hover {
+    background: rgb(161, 130, 71);
 }
 
 
@@ -240,10 +212,6 @@ section{
 
 .anchor-list-container.anchor-active {
     display: block;
-}
-
-#order-items{
-    overflow: hidden;
 }
 
 /*   combo container */
@@ -853,28 +821,44 @@ hr{
 
 
 
-.placeorder_container {
-    max-height: 0;
-    opacity: 0;
-    overflow: hidden;
-    transition: max-height 0.4s ease, opacity 0.3s ease;
+.placeorder_container{
+    position: absolute;
+    top: 12rem; /* Adjusted to account for navbar and panel height */
+    height: 80vh !important;
+    /* height: 55vh; */
+    width: 35.5rem !important;
+    left:0;
+    z-index: 1200;
+    background-color: #4d4855;
+    background-image: linear-gradient(147deg, #4d4855 0%, #000000 74%);
+    color: white;
+    padding: 0 1rem;
+    margin-left: 3rem;
+    display: none;
+    overflow: auto;
 }
-
-.placeorder_container.open {
-    max-height: 500px; /* adjust if needed */
-    opacity: 1;
+.placeorder_container{
+    overflow: hidden !important;
 }
-
-
-.search-container {
-    max-height: 80vh;
+.placeorder_container hr{
+    /* margin: auto; */
+    position: relative;
+    top: 1rem;
+    left: 0.5rem;
+    right: 1rem;
+    width: 33rem;
+}
+.placeorder_container.plo3{
+    display:block;
+    /* height:75vh; */
+    position: fixed;
+}
+.plordercont{
+    height: 50vh;
+    width: 35rem;
     overflow-y: auto;
+    overflow-x: hidden;
 }
-
-
-
-
-
 /* TOTAL SECTION - BLACK THEME */
 .total {
     background-color: #111; /* deep black background */
@@ -931,3 +915,90 @@ hr{
     color: #ffd700; /* highlight value on hover, optional */
     transition: color 0.3s ease;
 }
+
+.placeorder_container .remove-button:hover{
+    background-color: grey;
+}
+.remove-button {
+    color: red;
+    border: none;
+    font-size: 1.5rem;
+    font-weight: bold;
+    background-color: transparent;
+    padding: 0.2em 0.5em;
+    cursor: pointer;
+}
+#order-items {
+    text-align: left;
+    background-color: white;
+    color: black;
+    height: 50vh;
+    width:35rem;
+    overflow: auto;
+}
+.order-item{
+    margin-top: 2.5rem;
+    display: flex;
+    padding-right:1rem ;
+    justify-content: space-between;
+    align-items: center;
+    margin-bottom: 1em;
+}
+.order-item span{
+    font-size: 1.5rem;
+    color:#cccccc
+}
+.placeorder_container .img{
+    height:23rem;
+    width: auto;
+    margin:2rem 5rem;
+    /* margin: 3rem; */
+    background-image: url(images/orderempty.png);
+    background-size: contain;
+    background-repeat: no-repeat;
+}
+
+.placeorder_container p{
+   font-size: 3rem;
+   font-weight: 300;
+   text-align: center;
+   text-transform: capitalize;
+   font-style: italic ;
+   color: #cccccc;
+   justify-content: center;
+   align-items: center;
+   padding-top: 2rem;
+}
+.order-item img {
+    width: 60px;
+    height: auto;
+    margin-right: 1em;
+}
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
