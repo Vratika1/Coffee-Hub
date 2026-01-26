@@ -177,12 +177,16 @@ html{
     border-color: rgb(120, 101, 67);
     color: aliceblue;
     height:3rem;
-    padding: 0.5rem 1rem;
-    width:4rem;
+    padding: 1rem 0.8rem;
+    width: auto;
+    min-width: 9rem;
     margin-right: 3rem;
     align-items: center;
     margin-top: 1rem;
     border-radius: 0.4rem;
+    white-space: nowrap;
+    text-align: center;
+    display: inline-block;
 }
 .bt:hover{
     word-spacing: 1rem;
@@ -212,6 +216,7 @@ html{
     font-size:2rem; 
     display:none;  
     overflow: auto;
+    z-index: 1300;
 }
 .order_container a{
     text-decoration: none;
@@ -399,55 +404,80 @@ html{
     overflow: auto;
 }
 .account_container a{
-    margin-left: 9rem;
-    width:12rem;
-    margin-bottom: 1rem;
+    margin: 0.5rem auto;
+    padding: 0.5rem 1rem;
+    width: auto;
+    min-width: 10rem;
     text-decoration: none;
+    background-color: rgb(138, 112, 65);
+    border-color: rgb(120, 101, 67);
+    color: aliceblue;
+    height: 3rem;
+    border-radius: 0.4rem;
+    align-items: center;
+    display: flex;
+    justify-content: center;
+    white-space: nowrap;
+    font-size: 1.5rem;
 }
 
 /*  search box for search-icon*/
 .search-form{    
-    position: absolute !important;
-    top:15%;
-    right:6%;
-    z-index: 1200;
-    background: white;
-    width: 50rem;
-    height:5rem;
-    display: flex !important;
-    align-items: center;
-    border-radius: 1rem;
-    transform: scaleY(0);
-    
-    /* display: none; */
-    transform-origin: top;
+    position: fixed !important;
+    top: 15% !important;
+    right: 6% !important;
+    z-index: 1500 !important;
+    background: white !important;
+    width: 50rem !important;
+    height: 5rem !important;
+    display: none !important;
+    flex-direction: row !important;
+    align-items: center !important;
+    justify-content: space-between !important;
+    border-radius: 1rem !important;
+    padding: 0 !important;
+    box-shadow: 0 4px 8px rgba(0,0,0,0.2) !important;
 }
 .search-form input{
-    height: 100%;
-    width: 100%;
-    font-size: 2rem;
-    color:black;
-    text-transform: none;
-    border: none;
-    border-top-left-radius: 1rem;
-    border-bottom-left-radius: 1rem;
-    padding: 1rem;
+    flex: 1 !important;
+    height: 100% !important;
+    font-size: 2rem !important;
+    color: black !important;
+    text-transform: none !important;
+    border: none !important;
+    border-top-left-radius: 1rem !important;
+    border-bottom-left-radius: 1rem !important;
+    padding: 0 1.5rem !important;
+    box-sizing: border-box !important;
+    background: white !important;
+    outline: none !important;
 }
+
+.search-form input::placeholder {
+    color: #999 !important;
+}
+
 .search-form label{
-    color: black;
-    cursor: pointer;
-    font-size: 2.2rem;
-    margin-right: 1.5rem;
-    position: relative;
-    left:0.5rem;
+    display: flex !important;
+    align-items: center !important;
+    justify-content: center !important;
+    color: black !important;
+    cursor: pointer !important;
+    font-size: 2.2rem !important;
+    padding: 0 1.5rem !important;
+    height: 100% !important;
+    background: white !important;
+    border-top-right-radius: 1rem !important;
+    border-bottom-right-radius: 1rem !important;
 }
 
 .search-form label:hover{
-    color: rgb(95, 93, 93);
+    color: rgb(95, 93, 93) !important;
+    background: #f5f5f5 !important;
 }
 
 .search-form.show{
-    transform: scaleY(1);
+    display: flex !important;
     position: fixed !important;
 } 
 
@@ -865,9 +895,20 @@ html{
     .anchor-list-container {
         width: 30rem;
     }
+    .search-form{
+        width: 90% !important;
+        right: 5% !important;
+        height: 4.5rem !important;
+    }
+    .search-form input{
+        font-size: 1.8rem !important;
+    }
+    .search-form label{
+        font-size: 2rem !important;
+    }
     .search-form.show{
-        width:90%;
-        right:2rem;
+        width: 90%;
+        right: 5%;
     }
     section{
         padding: 2rem;
@@ -947,9 +988,31 @@ html{
         display: flex;
         flex-direction: column;
         width:30rem;
-       
+        padding: 1rem;
+        align-items: center;
+    }
+    .account_container.ac a{
+        margin: 0.5rem auto !important;
+        width: auto !important;
+        min-width: 9rem !important;
+        padding: 0.7rem 1.2rem !important;
     }
     
+    /* Search form responsive */
+    .search-form{
+        width: 85% !important;
+        right: 7.5% !important;
+        height: 4.2rem !important;
+        top: 12% !important;
+    }
+    .search-form input{
+        font-size: 1.6rem !important;
+        padding: 0 1rem !important;
+    }
+    .search-form label{
+        font-size: 1.8rem !important;
+        padding: 0 1rem !important;
+    }
 }
 
 @media (max-width:570px){
@@ -965,6 +1028,32 @@ html{
     html{
         font-size: 50%;  
     }
+    .account_container.ac{
+        width: 28rem;
+    }
+    .account_container.ac a{
+        min-width: 8rem !important;
+        padding: 0.6rem 1rem !important;
+        font-size: 1.2rem;
+    }
+    
+    /* Search form ultra-responsive */
+    .search-form{
+         width: 85% !important;
+        right: 6.5% !important;
+        height: 3.8rem !important;
+        top: 16% !important;
+    }
+    .search-form input{
+        font-size: 2rem !important;
+        padding: 0 0.8rem !important;
+    }
+    .search-form label{
+        font-size: 1.6rem !important;
+        /* margin-top: 0.5rem !important;
+        padding: 0 0.8rem !important; */
+    }
+    
     .rate-1{
         padding-left: 5rem;
         margin-left: 2rem;
@@ -985,7 +1074,33 @@ html{
 @media (max-width:400px){
     .rate-1 .icons{
         padding-left: 8rem !important;
-     }
+    }
+    
+    /* Search form for extra small phones */
+    .search-form{
+        width: 85% !important;
+        right: 6.5% !important;
+        height: 3.8rem !important;
+        top: 16% !important;
+    }
+    .search-form input{
+        font-size: 1.2rem !important;
+        padding: 0 0.6rem !important;
+    }
+    .search-form label{
+        font-size: 1.4rem !important;
+        padding: 0 0.6rem !important;
+    }
+    }
+    .search-form input{
+        font-size: 1.7rem !important;
+        padding: 0 0.6rem !important;
+    }
+    .search-form label{
+        font-size: 1.4rem !important;
+        /* margin-top: 0.5rem !important;
+        padding: 0 0.6rem !important; */
+    }
 }
 
 
@@ -996,6 +1111,23 @@ html{
     html{
         font-size: 48%;
     }
+    
+    /* Search form for tiny phones */
+    .search-form{
+        width: 70% !important;
+        right: 15% !important;
+        height: 3.6rem !important;
+        top: 9% !important;
+    }
+    .search-form input{
+        font-size: 1rem !important;
+        padding: 0 0.5rem !important;
+    }
+    .search-form label{
+        font-size: 1.2rem !important;
+        padding: 0 0.5rem !important;
+    }
+    
     .rate-1{
         padding-left: 7rem;
         margin-left: 4rem;

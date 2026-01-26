@@ -114,24 +114,6 @@ document.addEventListener('DOMContentLoaded', () => {
         wishlistContainer.style.display = 'none';
     }
 
-    // ================= SEARCH ICON CLICK =================
-    if (searchIcon) {
-        searchIcon.addEventListener('click', () => {
-            if (searchForm) {
-                searchForm.classList.toggle('show');
-            }
-            if (placeOrderContainer) {
-                placeOrderContainer.style.display = 'none';
-            }
-            if (cartItemsContainer) {
-                cartItemsContainer.style.display = 'none';
-            }
-            if (wishlistContainer) {
-                wishlistContainer.style.display = 'none';
-            }
-        });
-    }
-
     // ================= WISH ICON CLICK =================
     if (wishIcon) {
         wishIcon.addEventListener('click', () => {
@@ -377,44 +359,46 @@ const renderOrders = () => {
 
 
     // ================= SEARCH =================
-    searchBar.addEventListener('input', () => {
-        const query = searchBar.value.toLowerCase().trim();
+    if (searchBar) {
+        searchBar.addEventListener('input', () => {
+            const query = searchBar.value.toLowerCase().trim();
 
-        searchContainer.innerHTML = `
-            <button class="remove fas fa-times"></button>
-            <div class="search-results-box"></div>
-        `;
+            searchContainer.innerHTML = `
+                <button class="remove fas fa-times"></button>
+                <div class="search-results-box"></div>
+            `;
 
-        const resultsBox = searchContainer.querySelector('.search-results-box');
+            const resultsBox = searchContainer.querySelector('.search-results-box');
 
-        if (!query) {
-            searchContainer.style.display = 'none';
-            return;
-        }
-
-        searchContainer.style.display = 'block';
-
-        let found = false;
-
-        // Search in both .menu-box (index.html) and .section (specialcombos.html)
-        document.querySelectorAll('.menu-box, .section').forEach(item => {
-            const name = item.querySelector('.name')?.textContent.toLowerCase();
-            if (name && name.includes(query)) {
-                const clonedItem = item.cloneNode(true);
-                resultsBox.appendChild(clonedItem);
-                found = true;
+            if (!query) {
+                searchContainer.style.display = 'none';
+                return;
             }
+
+            searchContainer.style.display = 'block';
+
+            let found = false;
+
+            // Search in both .menu-box (index.html) and .section (specialcombos.html)
+            document.querySelectorAll('.menu-box, .section').forEach(item => {
+                const name = item.querySelector('.name')?.textContent.toLowerCase();
+                if (name && name.includes(query)) {
+                    const clonedItem = item.cloneNode(true);
+                    resultsBox.appendChild(clonedItem);
+                    found = true;
+                }
+            });
+
+            if (!found) {
+                resultsBox.innerHTML = `<p>No results found</p>`;
+            }
+
+            searchContainer.querySelector('.remove').onclick = () => {
+                searchContainer.style.display = 'none';
+                searchBar.value = '';
+            };
         });
-
-        if (!found) {
-            resultsBox.innerHTML = `<p>No results found</p>`;
-        }
-
-        searchContainer.querySelector('.remove').onclick = () => {
-            searchContainer.style.display = 'none';
-            searchBar.value = '';
-        };
-    });
+    }
 
 
     // ================= CLOSE CONTAINERS ON SCROLL =================

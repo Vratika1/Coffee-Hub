@@ -79,7 +79,7 @@ section{
     padding: 0 1rem;
     margin-right: 2rem;
     display: flex;
-    z-index: 1200;
+    z-index: 1300;
     flex-direction: column;
     justify-content: center;
     text-align: center;
@@ -87,6 +87,91 @@ section{
     font-size: 2rem;
     display: none;
     overflow: auto;
+}
+
+.account_container a {
+    margin: 0.5rem auto;
+    padding: 0.5rem 1rem;
+    width: auto;
+    min-width: 10rem;
+    text-decoration: none;
+    background-color: rgb(138, 112, 65);
+    border-color: rgb(120, 101, 67);
+    color: aliceblue;
+    height: 3rem;
+    border-radius: 0.4rem;
+    align-items: center;
+    display: flex;
+    justify-content: center;
+    white-space: nowrap;
+    font-size: 1.5rem;
+    transition: 0.3s;
+}
+
+.account_container a:hover {
+    background-color: rgb(161, 130, 71);
+    box-shadow: 0 4px 8px rgba(0, 0, 0, 0.3);
+}
+
+/* Search form styling */
+.search-form{    
+    position: fixed !important;
+    top: 15% !important;
+    right: 6% !important;
+    z-index: 1500 !important;
+    background: white !important;
+    width: 50rem !important;
+    height: 5rem !important;
+    display: none !important;
+    flex-direction: row !important;
+    align-items: center !important;
+    justify-content: space-between !important;
+    border-radius: 1rem !important;
+    padding: 0 !important;
+    box-shadow: 0 4px 8px rgba(0,0,0,0.2) !important;
+}
+
+.search-form input{
+    flex: 1 !important;
+    height: 100% !important;
+    font-size: 2rem !important;
+    color: black !important;
+    text-transform: none !important;
+    border: none !important;
+    border-top-left-radius: 1rem !important;
+    border-bottom-left-radius: 1rem !important;
+    padding: 0 1.5rem !important;
+    box-sizing: border-box !important;
+    background: white !important;
+    outline: none !important;
+}
+
+.search-form input::placeholder {
+    color: #999 !important;
+}
+
+.search-form label{
+    display: flex !important;
+    align-items: center !important;
+    justify-content: center !important;
+    color: black !important;
+    cursor: pointer !important;
+    font-size: 2.2rem !important;
+    padding: 0 1.5rem !important;
+    height: 100% !important;
+    background: white !important;
+    border-top-right-radius: 1rem !important;
+    border-bottom-right-radius: 1rem !important;
+}
+
+.search-form label:hover{
+    color: rgb(95, 93, 93) !important;
+    background: #f5f5f5 !important;
+}
+
+.search-form.show{
+    display: flex !important;
+    position: fixed !important;
 }
 
 /* Search container to display results */
@@ -186,6 +271,26 @@ section{
     border-radius: 8px; 
 }
 
+
+@media (max-width: 450px) {
+    .search-form {
+        width: 85% !important;
+        font-size: 1.5rem !important;
+        right: 10% !important;
+        height: 4rem !important;
+        top: 11% !important;
+        left: auto !important;
+    }
+    .search-form label{
+        padding: 0 1rem !important;
+        margin-top: 0.5rem !important;
+    }
+    .placeorder_container{
+        width: 30.5rem !important;
+        margin-left: 0;
+    }
+}
+
 .anchor-list-container a{
     text-decoration: none;
     font-size: 3rem;
@@ -212,6 +317,11 @@ section{
 
 .anchor-list-container.anchor-active {
     display: block;
+}
+
+
+.order_container{
+    top: 17%;
 }
 
 /*   combo container */
@@ -654,6 +764,14 @@ hr{
         text-transform: capitalize;
         font-size: 1.5rem;
     }
+    
+    .account_container a {
+        margin: 0.4rem auto;
+        padding: 0.4rem 0.8rem;
+        min-width: 8rem;
+        font-size: 1.2rem;
+        height: 2.5rem;
+    }
 }
 
 
@@ -826,7 +944,7 @@ hr{
     top: 12rem; /* Adjusted to account for navbar and panel height */
     height: 80vh !important;
     /* height: 55vh; */
-    width: 35.5rem !important;
+    width: 35.5rem;
     left:0;
     z-index: 1200;
     background-color: #4d4855;
@@ -976,7 +1094,41 @@ hr{
 }
 
 
+@media (max-width: 450px) {
+    .placeorder_container {
+        width: 30.5rem !important;
+        margin-left: 0 !important;
+        height: 75vh !important;
+        top: 15rem !important;
+        left: 50% !important;
+        transform: translateX(-50%) !important;
+    }
 
+    .plordercont{
+        width: 28rem !important;
+        height: 45vh !important;
+    }
+    
+    .total {
+        width: 28rem !important;
+    }
+    
+    .placeorder_container hr {
+        width: 28rem !important;
+        margin-left: 0 !important;
+    }
+    
+    #wish-items{
+        width: 30rem !important;
+    }
+
+}
+
+.wishlist-container p{
+
+    margin-top: 0 !important;
+   
+}
 
 
 
